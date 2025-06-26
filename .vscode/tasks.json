@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Démarrer le bot Discord",
+      "type": "shell",
+      "command": "npm start",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "default": {
+    "image": "https://cdn.discordapp.com/attachments/1299241626031357967/1387867110725648575/76706EBA-D8D1-410B-8519-F167B9DACA4A.gif?ex=685ee778&is=685d95f8&hm=0c75eebee8e200f6c97ea069e824140e53ef967debe82a777bd5ec5101843364&",
+    "text": "Bienvenue en enfer\n{user} !",
+    "color": "#ffffff",
+    "textSize": 28,
+    "avatarSize": 200
+  },
+  "1299241626031357963": {
+    "image": "https://cdn.discordapp.com/attachments/1299241626031357967/1387867110725648575/76706EBA-D8D1-410B-8519-F167B9DACA4A.gif?ex=685ee778&is=685d95f8&hm=0c75eebee8e200f6c97ea069e824140e53ef967debe82a777bd5ec5101843364&",
+    "text": "Bienvenue en enfer petite pute de \n {user}",
+    "color": "#000000",
+    "textSize": 26,
+    "avatarSize": 150
+  }
+}
