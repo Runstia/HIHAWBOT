@@ -2,6 +2,7 @@
 const { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const fs = require('fs');
+const http = require('http');
 require('dotenv').config();
 
 const client = new Client({
@@ -224,5 +225,16 @@ client.on('guildMemberAdd', async member => {
     const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'welcome.png' });
     channel.send({ content: `Bienvenue ${member}!!!`, files: [attachment] });
 });
+
+// Petit serveur web pour keepalive
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('je suis alive!');
+}).listen(process.env.PORT || 3000);
+
+// Keepalive : ping le serveur web toutes les 5 minutes
+setInterval(() => {
+    require('http').get('http://localhost:' + (process.env.PORT || 3000));
+}, 5 * 60 * 1000);
 
 client.login(process.env.TOKEN);
