@@ -176,54 +176,58 @@ client.on('messageCreate', async message => {
 });
 
 client.on('guildMemberAdd', async member => {
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'général');
-    if (!channel) return;
-    const guildId = member.guild.id;
-    if (!config[guildId]) config[guildId] = { ...config.default };
-    const { image, text, color } = config[guildId];
+    try {
+        const channel = member.guild.channels.cache.find(ch => ch.name === 'général');
+        if (!channel) return;
+        const guildId = member.guild.id;
+        if (!config[guildId]) config[guildId] = { ...config.default };
+        const { image, text, color } = config[guildId];
 
-    // Récupérer les tailles personnalisées ou valeurs par défaut
-    const textSize = config[guildId].textSize || 28;
-    const avatarSize = config[guildId].avatarSize || 200;
+        // Récupérer les tailles personnalisées ou valeurs par défaut
+        const textSize = config[guildId].textSize || 28;
+        const avatarSize = config[guildId].avatarSize || 200;
 
-    // Paramètres de l'image
-    const width = 700;
-    const height = 250;
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext('2d');
+        // Paramètres de l'image
+        const width = 700;
+        const height = 250;
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext('2d');
 
-    // Charger le fond
-    const background = await loadImage(image);
-    ctx.drawImage(background, 0, 0, width, height);
+        // Charger le fond
+        const background = await loadImage(image);
+        ctx.drawImage(background, 0, 0, width, height);
 
-    // Charger l'avatar
-    const avatarURL = member.user.displayAvatarURL({ extension: 'png', size: 128 });
-    const avatar = await loadImage(avatarURL);
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(125, 125, avatarSize / 2, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(avatar, 125 - avatarSize / 2, 125 - avatarSize / 2, avatarSize, avatarSize);
-    ctx.restore();
+        // Charger l'avatar
+        const avatarURL = member.user.displayAvatarURL({ extension: 'png', size: 128 });
+        const avatar = await loadImage(avatarURL);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(125, 125, avatarSize / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatar, 125 - avatarSize / 2, 125 - avatarSize / 2, avatarSize, avatarSize);
+        ctx.restore();
 
-    // Texte de bienvenue (ligne 1 personnalisable)
-    ctx.font = `bold ${textSize}px Sans`;
-    ctx.fillStyle = color;
-    ctx.textAlign = 'center';
-    const textLines = text.replace('{user}', member.user.username).split(/\n|\n/);
-    if (textLines.length === 1) {
-        ctx.fillText(textLines[0], 450, 145);
-    } else {
-        ctx.fillText(textLines[0], 450, 120);
-        ctx.font = `bold ${textSize + 4}px Sans`;
-        ctx.fillText(textLines[1], 450, 170);
+        // Texte de bienvenue (ligne 1 personnalisable)
+        ctx.font = `bold ${textSize}px Sans`;
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        const textLines = text.replace('{user}', member.user.username).split(/\n|\n/);
+        if (textLines.length === 1) {
+            ctx.fillText(textLines[0], 450, 145);
+        } else {
+            ctx.fillText(textLines[0], 450, 120);
+            ctx.font = `bold ${textSize + 4}px Sans`;
+            ctx.fillText(textLines[1], 450, 170);
+        }
+
+        // Envoyer l'image
+        const { AttachmentBuilder } = require('discord.js');
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'welcome.png' });
+        channel.send({ content: `Bienvenue ${member}!!!`, files: [attachment] });
+    } catch (err) {
+        console.error('Erreur lors de la génération ou de l’envoi du message de bienvenue :', err);
     }
-
-    // Envoyer l'image
-    const { AttachmentBuilder } = require('discord.js');
-    const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'welcome.png' });
-    channel.send({ content: `Bienvenue ${member}!!!`, files: [attachment] });
 });
 
 // Petit serveur web pour keepalive
