@@ -1,13 +1,13 @@
 {
   "default": {
-    "image": "https://cdn.discordapp.com/attachments/1388128958423502902/1399430618906886255/51b4bd70a215c09b73ae34374e738214.jpg?ex=688af313&is=6889a193&hm=40c53ebba6ff3f56171a6726bbbc40431bc8ac0634d0724b273ee5c338aad2cb&",
+    "image": "https://i.imgur.com/mCQFE14.jpeg",
     "text": "Bienvenue {user} !",
     "color": "#ffffff",
     "textSize": 28,
     "avatarSize": 200
   },
   "1299241626031357963": {
-    "image": "https://cdn.discordapp.com/attachments/1388128958423502902/1399430618906886255/51b4bd70a215c09b73ae34374e738214.jpg?ex=688af313&is=6889a193&hm=40c53ebba6ff3f56171a6726bbbc40431bc8ac0634d0724b273ee5c338aad2cb&",
+    "image": "https://i.imgur.com/mCQFE14.jpeg",
     "text": "Bienvenue {user} !",
     "color": "#ffffff",
     "textSize": 26,

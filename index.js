@@ -194,7 +194,14 @@ client.on('guildMemberAdd', async member => {
         const ctx = canvas.getContext('2d');
 
         // Charger le fond
-        const background = await loadImage(image);
+        let background;
+        try {
+            background = await loadImage(image);
+        } catch (imgErr) {
+            console.error('Erreur lors du chargement de l\'image de fond, utilisation d\'une image par défaut :', imgErr.message);
+            // Image de secours (couleur unie si problème)
+            background = await loadImage('https://via.placeholder.com/700x250/2c2f33/ffffff?text=Bienvenue');
+        }
         ctx.drawImage(background, 0, 0, width, height);
 
         // Charger l'avatar
